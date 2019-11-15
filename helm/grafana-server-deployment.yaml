@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana-server
+  name: grafana-server
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: grafana-server
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: grafana-server
+    spec:
+      containers:
+      - image: grafana-server
+        imagePullPolicy: Never
+        name: grafana-server
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: "256M"
+      restartPolicy: Always
+status: {}

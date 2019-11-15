@@ -35,9 +35,9 @@
 
         <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 
-        <docker.image.prefix>springcommunity</docker.image.prefix>
+        <docker.image.prefix>jkjell</docker.image.prefix>
         <docker.image.exposed.port>9090</docker.image.exposed.port>
-        <docker.image.dockerfile.dir>${basedir}</docker.image.dockerfile.dir>
+        <docker.image.dockerfile.dir>${basedir}/docker</docker.image.dockerfile.dir>
         <docker.image.dockerize.version>v0.6.1</docker.image.dockerize.version>
         <docker.plugin.version>1.2.0</docker.plugin.version>
     </properties>

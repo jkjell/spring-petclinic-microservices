@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tracing-server
+  name: tracing-server
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: tracing-server
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: tracing-server
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTS
+          value: -XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
+        image: openzipkin/zipkin
+        name: tracing-server
+        ports:
+        - containerPort: 9411
+        resources:
+          limits:
+            memory: "512M"
+      restartPolicy: Always
+status: {}
