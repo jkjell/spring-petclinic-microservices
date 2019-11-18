@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: config-server
+  name: config-server
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: config-server
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: config-server
+    spec:
+      containers:
+      - image: jkjell/spring-petclinic-config-server
+        imagePullPolicy: Never
+        name: config-server
+        ports:
+        - containerPort: 8888
+        resources:
+          limits:
+            memory: "536870912"
+      restartPolicy: Always
+status: {}

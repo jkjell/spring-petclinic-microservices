@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: discovery-server
+  name: discovery-server
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: discovery-server
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: discovery-server
+    spec:
+      containers:
+      - command:
+        - ./dockerize
+        - -wait=tcp://config-server:8888
+        - -timeout=60s
+        - --
+        - java
+        - -XX:+UnlockExperimentalVMOptions
+        - -XX:+UseCGroupMemoryLimitForHeap
+        - -Djava.security.egd=file:/dev/./urandom
+        - -jar
+        - /app.jar
+        image: jkjell/spring-petclinic-discovery-server:latest
+        imagePullPolicy: Never
+        name: discovery-server
+        ports:
+        - containerPort: 8761
+        resources:
+          limits:
+            memory: "512M"
+      restartPolicy: Always
+status: {}

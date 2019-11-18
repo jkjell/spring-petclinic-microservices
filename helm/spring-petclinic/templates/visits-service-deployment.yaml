@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: visits-service
+  name: visits-service
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: visits-service
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: visits-service
+    spec:
+      hostname: visits-service
+      containers:
+      - command:
+        - ./dockerize
+        - -wait=tcp://discovery-server:8761
+        - -timeout=60s
+        - --
+        - java
+        - -XX:+UnlockExperimentalVMOptions
+        - -XX:+UseCGroupMemoryLimitForHeap
+        - -Djava.security.egd=file:/dev/./urandom
+        - -jar
+        - /app.jar
+        image: jkjell/spring-petclinic-visits-service
+        imagePullPolicy: Never
+        name: visits-service
+        ports:
+        - containerPort: 8082
+        resources:
+          limits:
+            memory: "512M"
+      restartPolicy: Always
+status: {}
