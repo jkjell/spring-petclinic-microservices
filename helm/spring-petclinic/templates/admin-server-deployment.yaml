@@ -6,12 +6,16 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: admin-server
+    app: {{ template "spring-petclinic.name" . }}-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
   name: admin-server
 spec:
   selector:
     matchLabels:
-      io.kompose.service: admin-server
+      app: {{ template "spring-petclinic.name" . }}-server
+      release: {{ .Release.Name | quote }}
   replicas: 1
   strategy: {}
   template:
@@ -21,9 +25,12 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: admin-server
+        app: {{ template "spring-petclinic.name" . }}-server
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
-      hostname: admin-server
+      hostname: {{ template "spring-petclinic.name" . }}-server
       containers:
       - command:
         - ./dockerize
@@ -36,9 +43,11 @@ spec:
         - -Djava.security.egd=file:/dev/./urandom
         - -jar
         - /app.jar
-        image: jkjell/spring-petclinic-admin-server
-        imagePullPolicy: Never
-        name: admin-server
+{{ $imageInfo := (dict "image" .Values.images.admin_server "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        name: {{ template "spring-petclinic.name" . }}-server
         ports:
         - containerPort: 9090
         resources:

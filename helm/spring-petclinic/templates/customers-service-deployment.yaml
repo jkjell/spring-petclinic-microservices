@@ -6,12 +6,19 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: customers-service
-  name: customers-service
+    app: {{ template "spring-petclinic.name" . }}-customers-service
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-customers-service
 spec:
   selector:
     matchLabels:
-      io.kompose.service: customers-service
+      app: {{ template "spring-petclinic.name" . }}-customers-service
+      chart: {{ template "spring-petclinic.chart" . }}
+      release: {{ .Release.Name | quote }}
+      heritage: {{ .Release.Service | quote }}
+
   replicas: 1
   strategy: {}
   template:
@@ -21,9 +28,12 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: customers-service
+        app: {{ template "spring-petclinic.name" . }}-customers-service
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
-      hostname: customers-service
+      hostname: {{ template "spring-petclinic.name" . }}-customers-service
       containers:
       - command:
         - ./dockerize
@@ -36,9 +46,11 @@ spec:
         - -Djava.security.egd=file:/dev/./urandom
         - -jar
         - /app.jar
-        image: jkjell/spring-petclinic-customers-service:latest
-        imagePullPolicy: Never
-        name: customers-service
+{{ $imageInfo := (dict "image" .Values.images.customers_service "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        name: {{ template "spring-petclinic.name" . }}-customers-service
         ports:
         - containerPort: 8081
         resources:

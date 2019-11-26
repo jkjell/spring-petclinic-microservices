@@ -6,14 +6,17 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: config-server
-  name: config-server
+    app: {{ template "spring-petclinic.name" . }}-config-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-config-server
 spec:
   ports:
-  - name: "8888"
+  - name: {{ template "spring-petclinic.name" . }}-config-server
     port: 8888
-    targetPort: 8888
+    targetPort: {{ template "spring-petclinic.name" . }}-config-server
   selector:
-    io.kompose.service: config-server
+    app: {{ template "spring-petclinic.name" . }}-config-server
 status:
   loadBalancer: {}

@@ -54,3 +54,35 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+
+{{/*
+Create an image reference
+*/}}
+{{- define "registryImage" -}}
+    {{ $registry := default .global.imageRegistry .image.registry }}
+    {{- printf "%s/%s:%s" $registry .image.name .image.tag -}}
+    {{- if .image.digest -}}
+        {{- printf "@%s" .image.digest -}}
+    {{- end -}}
+{{- end -}}
+
+{{/*
+Specify the image pull policy
+*/}}
+{{- define "imagePullPolicy" -}}
+    {{- printf "%s" (default .global.imagePullPolicy .image.pullPolicy) -}}
+{{- end -}}
+
+{{/*
+Use the image pull secrets
+*/}}
+{{- define "imagePullSecrets" -}}
+    {{- $secrets := default .global.imagePullSecrets .image.pullSecrets -}}
+    {{- if $secrets -}}
+        imagePullSecrets:
+        {{- range $secrets }}
+            - name: {{ . }}
+        {{- end }}
+    {{- end -}}
+{{- end -}}

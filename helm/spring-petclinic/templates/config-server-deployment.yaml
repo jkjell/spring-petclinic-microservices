@@ -6,12 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: config-server
-  name: config-server
+    app: {{ template "spring-petclinic.name" . }}-config-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-config-server
 spec:
   selector:
     matchLabels:
-      io.kompose.service: config-server
+      app: {{ template "spring-petclinic.name" . }}-config-server
   replicas: 1
   strategy: {}
   template:
@@ -21,12 +24,17 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: config-server
+        app: {{ template "spring-petclinic.name" . }}-config-server
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
       containers:
-      - image: jkjell/spring-petclinic-config-server
-        imagePullPolicy: Never
-        name: config-server
+      - name: {{ template "spring-petclinic.name" . }}-config-server
+{{ $imageInfo := (dict "image" .Values.images.config_server "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 8888
         resources:

@@ -4,10 +4,24 @@
 
 replicaCount: 1
 
-image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
+global:
+  imageRegistry: "dockerhub.io/jkjell"
+  imagePullPolicy: "IfNotPresent"
+  imagePullSecrets: []
+
+images:
+  admin_server:
+    name: spring-petclinic-admin-server
+    tag: latest
+  api_gateway:
+    name: spring-petclinic-api-gateway
+    tag: latest
+  config_server:
+    name: spring-petclinic-config-server
+    tag: latest
+  customers_service:
+    name: spring-petclinic-customers-service
+    tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
