@@ -22,10 +22,15 @@ images:
   customers_service:
     name: spring-petclinic-customers-service
     tag: latest
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+  discovery_server:
+    name: spring-petclinic-discovery-server
+    tag: latest
+  grafana_server:
+    name: spring-petclinic-grafana-server
+    tag: latest
+  hystrix_dashboard:
+    name: spring-petclinic-hystrix-dashboard
+    tag: latest
 
 serviceAccount:
   # Specifies whether a service account should be created

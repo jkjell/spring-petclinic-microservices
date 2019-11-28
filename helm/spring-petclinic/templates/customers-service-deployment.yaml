@@ -15,10 +15,6 @@ spec:
   selector:
     matchLabels:
       app: {{ template "spring-petclinic.name" . }}-customers-service
-      chart: {{ template "spring-petclinic.chart" . }}
-      release: {{ .Release.Name | quote }}
-      heritage: {{ .Release.Service | quote }}
-
   replicas: 1
   strategy: {}
   template:

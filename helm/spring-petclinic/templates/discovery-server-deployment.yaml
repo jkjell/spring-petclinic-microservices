@@ -6,12 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: discovery-server
-  name: discovery-server
+    app: {{ template "spring-petclinic.name" . }}-discovery-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-discovery-server
 spec:
   selector:
     matchLabels:
-      io.kompose.service: discovery-server
+      app: {{ template "spring-petclinic.name" . }}-discovery-server
   replicas: 1
   strategy: {}
   template:
@@ -21,7 +24,10 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: discovery-server
+        app: {{ template "spring-petclinic.name" . }}-discovery-server
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - command:
@@ -35,9 +41,11 @@ spec:
         - -Djava.security.egd=file:/dev/./urandom
         - -jar
         - /app.jar
-        image: jkjell/spring-petclinic-discovery-server:latest
-        imagePullPolicy: Never
-        name: discovery-server
+{{ $imageInfo := (dict "image" .Values.images.discovery_server "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        name: {{ template "spring-petclinic.name" . }}-discovery-server
         ports:
         - containerPort: 8761
         resources:

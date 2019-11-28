@@ -6,12 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: hystrix-dashboard
-  name: hystrix-dashboard
+    app: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
 spec:
   selector:
     matchLabels:
-      io.kompose.service: hystrix-dashboard
+      app: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
   replicas: 1
   strategy: {}
   template:
@@ -21,7 +24,10 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: hystrix-dashboard
+        app: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - command:
@@ -35,9 +41,11 @@ spec:
         - -Djava.security.egd=file:/dev/./urandom
         - -jar
         - /app.jar
-        image: jkjell/spring-petclinic-hystrix-dashboard
-        imagePullPolicy: Never
-        name: hystrix-dashboard
+{{ $imageInfo := (dict "image" .Values.images.hystrix_dashboard "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
         ports:
         - containerPort: 7979
         resources:

@@ -6,14 +6,17 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: discovery-server
-  name: discovery-server
+    app: {{ template "spring-petclinic.name" . }}-discovery-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-discovery-server
 spec:
   ports:
-  - name: "8761"
+  - name: {{ template "spring-petclinic.name" . }}-discovery-server
     port: 8761
-    targetPort: 8761
+    targetPort: {{ template "spring-petclinic.name" . }}-discovery-server
   selector:
-    io.kompose.service: discovery-server
+    app: {{ template "spring-petclinic.name" . }}-discovery-server
 status:
   loadBalancer: {}

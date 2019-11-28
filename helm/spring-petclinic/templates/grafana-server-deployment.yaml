@@ -6,12 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: grafana-server
-  name: grafana-server
+    app: {{ template "spring-petclinic.name" . }}-grafana-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.name" . }}-grafana-server
 spec:
   selector:
     matchLabels:
-      io.kompose.service: grafana-server
+      app: {{ template "spring-petclinic.name" . }}-grafana-server
   replicas: 1
   strategy: {}
   template:
@@ -21,12 +24,17 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: grafana-server
+        app: {{ template "spring-petclinic.name" . }}-grafana-server
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
       containers:
-      - image: grafana-server
-        imagePullPolicy: Never
-        name: grafana-server
+      - name: {{ template "spring-petclinic.name" . }}-grafana-server
+{{ $imageInfo := (dict "image" .Values.images.discovery_server "global" .Values.global) }}
+{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 3000
         resources:
