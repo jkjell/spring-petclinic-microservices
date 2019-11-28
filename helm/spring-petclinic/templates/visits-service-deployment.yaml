@@ -41,6 +41,7 @@ spec:
         name: visits-service
         ports:
         - containerPort: 8082
+          name: {{ template "spring-petclinic.name" . }}-visits-service
         resources:
           limits:
             memory: "512M"

@@ -10,9 +10,9 @@ metadata:
   name: tracing-server
 spec:
   ports:
-  - name: "9411"
+  - name: {{ template "spring-petclinic.name" . }}-tracing-server
     port: 9411
-    targetPort: 9411
+    targetPort: {{ template "spring-petclinic.name" . }}-tracing-server
   selector:
     io.kompose.service: tracing-server
 status:

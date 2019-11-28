@@ -41,7 +41,8 @@ spec:
         name: vets-service
         ports:
         - containerPort: 8083
-        resources:
+          name: {{ template "spring-petclinic.name" . }}-vets-service
+          resources:
           limits:
             memory: "512M"
       restartPolicy: Always

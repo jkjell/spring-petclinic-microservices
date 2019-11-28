@@ -37,6 +37,7 @@ spec:
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 3000
+          name: {{ template "spring-petclinic.name" . }}-grafana-server
         resources:
           limits:
             memory: "256M"

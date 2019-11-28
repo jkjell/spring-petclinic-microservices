@@ -51,6 +51,7 @@ spec:
         name: {{ template "spring-petclinic.name" . }}-api-gateway
         ports:
         - containerPort: 8080
+          name: {{ template "spring-petclinic.name" . }}-api-gateway
         resources:
           limits:
             memory: "536870912"

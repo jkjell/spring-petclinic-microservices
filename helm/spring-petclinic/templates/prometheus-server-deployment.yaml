@@ -29,6 +29,7 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 9090
+          name: {{ template "spring-petclinic.name" . }}-prmoetheus-server
         resources:
           limits:
             memory: "512M"

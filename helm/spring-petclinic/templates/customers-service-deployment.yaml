@@ -49,6 +49,7 @@ spec:
         name: {{ template "spring-petclinic.name" . }}-customers-service
         ports:
         - containerPort: 8081
+          name: {{ template "spring-petclinic.name" . }}-customers-service
         resources:
           limits:
             memory: "512M"

@@ -10,9 +10,9 @@ metadata:
   name: prometheus-server
 spec:
   ports:
-  - name: "9091"
+  - name: {{ template "spring-petclinic.name" . }}-prometheus-server
     port: 9091
-    targetPort: 9090
+    targetPort: {{ template "spring-petclinic.name" . }}-prometheus-server
   selector:
     io.kompose.service: prometheus-server
 status:

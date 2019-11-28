@@ -48,6 +48,7 @@ spec:
         name: {{ template "spring-petclinic.name" . }}-discovery-server
         ports:
         - containerPort: 8761
+          name: {{ template "spring-petclinic.name" . }}-discovery-server
         resources:
           limits:
             memory: "512M"

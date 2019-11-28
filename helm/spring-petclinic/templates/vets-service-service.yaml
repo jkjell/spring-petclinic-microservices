@@ -10,9 +10,9 @@ metadata:
   name: vets-service
 spec:
   ports:
-  - name: "8083"
+  - name: {{ template "spring-petclinic.name" . }}-vets-service
     port: 8083
-    targetPort: 8083
+    targetPort: {{ template "spring-petclinic.name" . }}-vets-service
   selector:
     io.kompose.service: vets-service
 status:

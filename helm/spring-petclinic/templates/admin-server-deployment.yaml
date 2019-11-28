@@ -50,6 +50,7 @@ spec:
         name: {{ template "spring-petclinic.name" . }}-server
         ports:
         - containerPort: 9090
+          name: {{ template "spring-petclinic.name" . }}-server
         resources:
           limits:
             memory: "512M"

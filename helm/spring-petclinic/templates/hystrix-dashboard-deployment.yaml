@@ -48,6 +48,7 @@ spec:
         name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
         ports:
         - containerPort: 7979
+          name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
         resources:
           limits:
             memory: "512M"
