@@ -61,6 +61,9 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
+springPetclinic:
+  version: 2.1.4
+
 podSecurityContext: {}
   # fsGroup: 2000
 

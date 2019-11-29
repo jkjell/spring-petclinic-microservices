@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose -f docker-compose.yml convert
-    kompose.version: 1.19.0 (f63a961c)
+    springPetclinic.version: {{ .Values.springPetclinic.version }}
   creationTimestamp: null
   labels:
     app: {{ template "spring-petclinic.fullname" . }}-config-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
+{{ template "spring-petclinic.labels" | indent 4 }}
   name: {{ template "spring-petclinic.fullname" . }}-config-server
 spec:
   selector:
@@ -20,14 +20,14 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose -f docker-compose.yml convert
-        kompose.version: 1.19.0 (f63a961c)
+        springPetclinic.version: {{ .Values.springPetclinic.version }}
       creationTimestamp: null
       labels:
         app: {{ template "spring-petclinic.fullname" . }}-config-server
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
+{{ template "spring-petclinic.labels" | indent 8 }}
     spec:
       containers:
       - name: {{ template "spring-petclinic.fullname" . }}-config-server
