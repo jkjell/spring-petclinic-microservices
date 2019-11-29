@@ -6,17 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-server
+    app: {{ template "spring-petclinic.fullname" . }}-admin-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.fullname" . }}-server
+  name: {{ template "spring-petclinic.fullname" . }}-admin-server
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-server
-    port: 9090
-    targetPort: {{ template "spring-petclinic.name" . }}-server
+  - port: 9090
   selector:
-    app: {{ template "spring-petclinic.name" . }}-server
+    app: {{ template "spring-petclinic.fullname" . }}-admin-server
 status:
   loadBalancer: {}

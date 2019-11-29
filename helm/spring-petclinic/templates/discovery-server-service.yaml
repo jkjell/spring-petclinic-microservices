@@ -6,17 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-discovery-server
+    app: {{ template "spring-petclinic.fullname" . }}-discovery-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-discovery-server
+  name: {{ template "spring-petclinic.fullname" . }}-discovery-server
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-discovery-server
-    port: 8761
-    targetPort: {{ template "spring-petclinic.name" . }}-discovery-server
+  - port: 8761
   selector:
-    app: {{ template "spring-petclinic.name" . }}-discovery-server
+    app: {{ template "spring-petclinic.fullname" . }}-discovery-server
 status:
   loadBalancer: {}

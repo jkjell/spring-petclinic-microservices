@@ -6,16 +6,14 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-api-gateway
+    app: {{ template "spring-petclinic.fullname" . }}-api-gateway
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-api-gateway
+  name: {{ template "spring-petclinic.fullname" . }}-api-gateway
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-api-gateway
-    port: 8080
-    targetPort: {{ template "spring-petclinic.name" . }}-api-gateway
+  - port: 8080
   selector:
     io.kompose.service: api-gateway
 status:

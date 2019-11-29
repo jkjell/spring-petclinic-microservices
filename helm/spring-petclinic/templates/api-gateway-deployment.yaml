@@ -6,15 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-api-gateway
+    app: {{ template "spring-petclinic.fullname" . }}-api-gateway
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-api-gateway
+  name: {{ template "spring-petclinic.fullname" . }}-api-gateway
 spec:
   selector:
     matchLabels:
-      app: {{ template "spring-petclinic.name" . }}-api-gateway
+      app: {{ template "spring-petclinic.fullname" . }}-api-gateway
       chart: {{ template "spring-petclinic.chart" . }}
       release: {{ .Release.Name | quote }}
       heritage: {{ .Release.Service | quote }}
@@ -27,7 +27,7 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        app: {{ template "spring-petclinic.name" . }}-api-gateway
+        app: {{ template "spring-petclinic.fullname" . }}-api-gateway
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
@@ -45,13 +45,12 @@ spec:
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.api_gateway "global" .Values.global) }}
-{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+{{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
-        name: {{ template "spring-petclinic.name" . }}-api-gateway
+        name: {{ template "spring-petclinic.fullname" . }}-api-gateway
         ports:
         - containerPort: 8080
-          name: {{ template "spring-petclinic.name" . }}-api-gateway
         resources:
           limits:
             memory: "536870912"

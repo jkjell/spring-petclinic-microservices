@@ -6,17 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-customers-service
+    app: {{ template "spring-petclinic.fullname" . }}-customers-service
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-customers-service
+  name: {{ template "spring-petclinic.fullname" . }}-customers-service
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-customers-service
-    port: 8081
-    targetPort: {{ template "spring-petclinic.name" . }}-customers-service
+  - port: 8081
   selector:
-    app: {{ template "spring-petclinic.name" . }}-customers-service
+    app: {{ template "spring-petclinic.fullname" . }}-customers-service
 status:
   loadBalancer: {}

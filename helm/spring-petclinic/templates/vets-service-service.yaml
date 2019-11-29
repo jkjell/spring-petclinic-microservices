@@ -6,14 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: vets-service
-  name: vets-service
+    app: {{ template "spring-petclinic.fullname" . }}-vets-service
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.fullname" . }}-vets-service
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-vets-service
-    port: 8083
-    targetPort: {{ template "spring-petclinic.name" . }}-vets-service
+  - port: 8083
   selector:
-    io.kompose.service: vets-service
+    app: {{ template "spring-petclinic.fullname" . }}-vets-service
 status:
   loadBalancer: {}

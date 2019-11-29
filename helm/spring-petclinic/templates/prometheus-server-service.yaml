@@ -6,14 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: prometheus-server
-  name: prometheus-server
+    app: {{ template "spring-petclinic.fullname" . }}-prometheus-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.fullname" . }}-prometheus-server
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-prometheus-server
-    port: 9091
-    targetPort: {{ template "spring-petclinic.name" . }}-prometheus-server
+  - port: 9091
   selector:
-    io.kompose.service: prometheus-server
+    app: {{ template "spring-petclinic.fullname" . }}-prometheus-server
 status:
   loadBalancer: {}

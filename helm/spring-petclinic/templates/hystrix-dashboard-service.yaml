@@ -6,17 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+    app: {{ template "spring-petclinic.fullname" . }}-hystrix-dashboard
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+  name: {{ template "spring-petclinic.fullname" . }}-hystrix-dashboard
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
-    port: 7979
-    targetPort: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+  - port: 7979
   selector:
-    app: {{ template "spring-petclinic.name" . }}-hystrix-dashboard
+    app: {{ template "spring-petclinic.fullname" . }}-hystrix-dashboard
 status:
   loadBalancer: {}

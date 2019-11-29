@@ -6,15 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-grafana-server
+    app: {{ template "spring-petclinic.fullname" . }}-grafana-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-grafana-server
+  name: {{ template "spring-petclinic.fullname" . }}-grafana-server
 spec:
   selector:
     matchLabels:
-      app: {{ template "spring-petclinic.name" . }}-grafana-server
+      app: {{ template "spring-petclinic.fullname" . }}-grafana-server
   replicas: 1
   strategy: {}
   template:
@@ -24,20 +24,19 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        app: {{ template "spring-petclinic.name" . }}-grafana-server
+        app: {{ template "spring-petclinic.fullname" . }}-grafana-server
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
     spec:
       containers:
-      - name: {{ template "spring-petclinic.name" . }}-grafana-server
+      - name: {{ template "spring-petclinic.fullname" . }}-grafana-server
 {{ $imageInfo := (dict "image" .Values.images.discovery_server "global" .Values.global) }}
-{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+{{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 3000
-          name: {{ template "spring-petclinic.name" . }}-grafana-server
         resources:
           limits:
             memory: "256M"

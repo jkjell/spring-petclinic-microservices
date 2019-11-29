@@ -6,17 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-grafana-server
+    app: {{ template "spring-petclinic.fullname" . }}-grafana-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-grafana-server
+  name: {{ template "spring-petclinic.fullname" . }}-grafana-server
 spec:
   ports:
-  - name: {{ template "spring-petclinic.name" . }}-grafana-server
-    port: 3000
-    targetPort: {{ template "spring-petclinic.name" . }}-grafana-server
+  - port: 3000
   selector:
-    app: {{ template "spring-petclinic.name" . }}-grafana-server
+    app: {{ template "spring-petclinic.fullname" . }}-grafana-server
 status:
   loadBalancer: {}

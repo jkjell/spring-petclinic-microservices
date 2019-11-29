@@ -6,15 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    app: {{ template "spring-petclinic.name" . }}-customers-service
+    app: {{ template "spring-petclinic.fullname" . }}-customers-service
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-  name: {{ template "spring-petclinic.name" . }}-customers-service
+  name: {{ template "spring-petclinic.fullname" . }}-customers-service
 spec:
   selector:
     matchLabels:
-      app: {{ template "spring-petclinic.name" . }}-customers-service
+      app: {{ template "spring-petclinic.fullname" . }}-customers-service
   replicas: 1
   strategy: {}
   template:
@@ -24,12 +24,12 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        app: {{ template "spring-petclinic.name" . }}-customers-service
+        app: {{ template "spring-petclinic.fullname" . }}-customers-service
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
     spec:
-      hostname: {{ template "spring-petclinic.name" . }}-customers-service
+      hostname: {{ template "spring-petclinic.fullname" . }}-customers-service
       containers:
       - command:
         - ./dockerize
@@ -43,13 +43,12 @@ spec:
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.customers_service "global" .Values.global) }}
-{{ include "imagePullSecrets" $concourseImage | indent 8 }}
+{{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
-        name: {{ template "spring-petclinic.name" . }}-customers-service
+        name: {{ template "spring-petclinic.fullname" . }}-customers-service
         ports:
         - containerPort: 8081
-          name: {{ template "spring-petclinic.name" . }}-customers-service
         resources:
           limits:
             memory: "512M"

@@ -6,12 +6,15 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: tracing-server
-  name: tracing-server
+    app: {{ template "spring-petclinic.fullname" . }}-tracing-server
+    chart: {{ template "spring-petclinic.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+  name: {{ template "spring-petclinic.fullname" . }}-tracing-server
 spec:
   selector:
     matchLabels:
-      io.kompose.service: tracing-server
+      app: {{ template "spring-petclinic.fullname" . }}-tracing-server
   replicas: 1
   strategy: {}
   template:
@@ -21,17 +24,22 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: tracing-server
+        app: {{ template "spring-petclinic.fullname" . }}-tracing-server
+        chart: {{ template "spring-petclinic.chart" . }}
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
     spec:
       containers:
       - env:
         - name: JAVA_OPTS
           value: -XX:+UnlockExperimentalVMOptions -Djava.security.egd=file:/dev/./urandom
-        image: openzipkin/zipkin
-        name: tracing-server
+{{ $imageInfo := (dict "image" .Values.images.tracing_server "global" .Values.global) }}
+{{ include "imagePullSecrets" $imageInfo | indent 8 }}
+        image: {{ include "registryImage" $imageInfo }}
+        imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        name: {{ template "spring-petclinic.fullname" . }}-tracing-server
         ports:
         - containerPort: 9411
-          name: {{ template "spring-petclinic.name" . }}-tracing-server
         resources:
           limits:
             memory: "512M"

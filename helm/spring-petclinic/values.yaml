@@ -5,33 +5,55 @@
 replicaCount: 1
 
 global:
-  imageRegistry: "dockerhub.io/jkjell"
+  imageRegistry: "dev.registry.pivotal.io/spring-petclinic-e2e"
   imagePullPolicy: "IfNotPresent"
   imagePullSecrets: []
 
 images:
   admin_server:
     name: spring-petclinic-admin-server
-    tag: latest
+    tag: java11
+    digest: sha256:c6f13cd4453ad38d2525ea7ad12f689ca321cef5aabd0fe8ee45183c92b1a4dd
   api_gateway:
     name: spring-petclinic-api-gateway
-    tag: latest
+    tag: java11
+    digest: sha256:c82ab3c6ae6b0192145e9c42d4fee020c69c7d909d3ce9855b4880a55f824a68
   config_server:
     name: spring-petclinic-config-server
-    tag: latest
+    tag: java11
+    digest: sha256:e41d3c79f5e5fa35dd787e7f04a394fe16b7b73711a733ea996b114d7436f4de
   customers_service:
     name: spring-petclinic-customers-service
-    tag: latest
+    tag: java11
+    digest: sha256:8be1b6a47a43d5ecfe490f5752208f7da44cbb3551ed3733084980ccfdd589f7
   discovery_server:
     name: spring-petclinic-discovery-server
-    tag: latest
+    tag: java11
+    digest: sha256:72156e62a7c2aa246711740e94887b061ff8afcd8715bd43e92c8ff6627c099e
   grafana_server:
     name: spring-petclinic-grafana-server
     tag: latest
+    digest: sha256:f52d10d7ef30958fdf023b0bb2301233e9821d1671472d6b5d196a2aa8ee5c01
   hystrix_dashboard:
     name: spring-petclinic-hystrix-dashboard
+    tag: java11
+    digest: sha256:50061e40166b46eebe752fabecc74812004323f6147564886f714b8683a708e1
+  prometheus_server:
+    name: spring-petclinic-prometheus-server
     tag: latest
-
+    digest: sha256:d5d128f60e51e14ce522e9162d68dbdc3b58a8f4636eba7f27337f33bb879abf
+  tracing_server:
+    name: zipkin
+    tag: latest
+    digest: sha256:87fe01472af81fb7e25d2a79eddda7b50bc450b7116b5fabafb4e6f6c66c802f
+  vets_service:
+    name: spring-petclinic-vets-service
+    tag: java11
+    digest: sha256:c09581bb42caac0e14e19c7cab373f4950beb4f779c64d1f0a407421f50e1f94
+  visits_service:
+    name: spring-petclinic-visits-service
+    tag: java11
+    digest: sha256:a07b839a18d7e780f8e60a5ef35390adf9b1816374013765e015670019fbe37a
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
