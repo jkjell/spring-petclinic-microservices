@@ -5,7 +5,7 @@ metadata:
     springPetclinic.version: {{ .Values.springPetclinic.version }}
   creationTimestamp: null
   labels:
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
     app: {{ template "spring-petclinic.fullname" . }}-vets-service
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
@@ -23,7 +23,7 @@ spec:
         springPetclinic.version: {{ .Values.springPetclinic.version }}
       creationTimestamp: null
       labels:
-{{ template "spring-petclinic.labels" | indent 8 }}
+{{ include "spring-petclinic.labels" . | indent 8 }}
         app: {{ template "spring-petclinic.fullname" . }}-vets-service
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
@@ -33,13 +33,14 @@ spec:
       containers:
       - command:
         - ./dockerize
-        - -wait=tcp://discovery-server:8761
+        - -wait=tcp://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761
         - -timeout=60s
         - --
         - java
         - -XX:+UnlockExperimentalVMOptions
-        - -XX:+UseCGroupMemoryLimitForHeap
+        - -XX:+UseContainerSupport
         - -Djava.security.egd=file:/dev/./urandom
+        - -Deureka.client.serviceUrl.defaultZone=http://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761/eureka/
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.vets_service "global" .Values.global) }}

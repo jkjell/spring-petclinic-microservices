@@ -9,7 +9,7 @@ metadata:
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
   name: {{ template "spring-petclinic.fullname" . }}-config-server
 spec:
   selector:
@@ -27,7 +27,7 @@ spec:
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 8 }}
+{{ include "spring-petclinic.labels" . | indent 8 }}
     spec:
       containers:
       - name: {{ template "spring-petclinic.fullname" . }}-config-server
@@ -37,8 +37,13 @@ spec:
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 8888
+        env:
+        - name: EUREKA_DEFAULT_ZONE
+          value: http://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761/eureka/
+        - name: TRACING_SERVER_URL
+          value: http://{{ template "spring-petclinic.fullname" . }}-tracing-server:9411
         resources:
           limits:
-            memory: "536870912"
+            memory: "512M"
       restartPolicy: Always
 status: {}

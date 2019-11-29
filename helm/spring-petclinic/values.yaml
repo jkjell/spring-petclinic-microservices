@@ -19,9 +19,9 @@ images:
     tag: java11
     digest: sha256:c82ab3c6ae6b0192145e9c42d4fee020c69c7d909d3ce9855b4880a55f824a68
   config_server:
-    name: spring-petclinic-config-server
+    name: spring-petclinic-helm-config-server
     tag: java11
-    digest: sha256:e41d3c79f5e5fa35dd787e7f04a394fe16b7b73711a733ea996b114d7436f4de
+    digest: sha256:b9aea7cc76a4a2f3b03cc976e3e8ee141b1d3b24c08a1e39e909e9b308503ec8
   customers_service:
     name: spring-petclinic-customers-service
     tag: java11

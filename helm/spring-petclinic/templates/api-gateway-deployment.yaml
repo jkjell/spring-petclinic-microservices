@@ -10,7 +10,7 @@ metadata:
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -30,18 +30,19 @@ spec:
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 8 }}
+{{ include "spring-petclinic.labels" . | indent 8 }}
     spec:
       containers:
       - command:
         - ./dockerize
-        - -wait=tcp://discovery-server:8761
+        - -wait=tcp://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761
         - -timeout=60s
         - --
         - java
         - -XX:+UnlockExperimentalVMOptions
-        - -XX:+UseCGroupMemoryLimitForHeap
+        - -XX:+UseContainerSupport
         - -Djava.security.egd=file:/dev/./urandom
+        - -Deureka.client.serviceUrl.defaultZone=http://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761/eureka/
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.api_gateway "global" .Values.global) }}
@@ -53,6 +54,6 @@ spec:
         - containerPort: 8080
         resources:
           limits:
-            memory: "536870912"
+            memory: "512M"
       restartPolicy: Always
 status: {}

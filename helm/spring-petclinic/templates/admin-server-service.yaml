@@ -10,7 +10,7 @@ metadata:
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
 spec:
   ports:
   - port: 9090

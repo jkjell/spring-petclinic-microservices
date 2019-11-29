@@ -9,7 +9,7 @@ metadata:
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
   name: {{ template "spring-petclinic.fullname" . }}-discovery-server
 spec:
   selector:
@@ -23,7 +23,7 @@ spec:
         springPetclinic.version: {{ .Values.springPetclinic.version }}
       creationTimestamp: null
       labels:
-{{ template "spring-petclinic.labels" | indent 8 }}
+{{ include "spring-petclinic.labels" . | indent 8 }}
         app: {{ template "spring-petclinic.fullname" . }}-discovery-server
         chart: {{ template "spring-petclinic.chart" . }}
         release: {{ .Release.Name | quote }}
@@ -32,13 +32,14 @@ spec:
       containers:
       - command:
         - ./dockerize
-        - -wait=tcp://config-server:8888
+        - -wait=tcp://{{ template "spring-petclinic.fullname" . }}-config-server:8888
         - -timeout=60s
         - --
         - java
         - -XX:+UnlockExperimentalVMOptions
-        - -XX:+UseCGroupMemoryLimitForHeap
+        - -XX:+UseContainerSupport
         - -Djava.security.egd=file:/dev/./urandom
+        - -Dspring.cloud.config.uri=http://{{ template "spring-petclinic.fullname" . }}-config-server:8888
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.discovery_server "global" .Values.global) }}

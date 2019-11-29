@@ -5,7 +5,7 @@ metadata:
     springPetclinic.version: {{ .Values.springPetclinic.version }}
   creationTimestamp: null
   labels:
-{{ template "spring-petclinic.labels" | indent 4 }}
+{{ include "spring-petclinic.labels" . | indent 4 }}
     app: {{ template "spring-petclinic.fullname" . }}-tracing-server
     chart: {{ template "spring-petclinic.chart" . }}
     release: {{ .Release.Name | quote }}
