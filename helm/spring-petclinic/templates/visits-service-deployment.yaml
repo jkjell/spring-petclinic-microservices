@@ -40,6 +40,7 @@ spec:
         - -XX:+UnlockExperimentalVMOptions
         - -XX:+UseContainerSupport
         - -Djava.security.egd=file:/dev/./urandom
+        - -Dspring.cloud.config.uri=http://{{ template "spring-petclinic.fullname" . }}-config-server:8888
         - -Deureka.client.serviceUrl.defaultZone=http://{{ template "spring-petclinic.fullname" . }}-discovery-server:8761/eureka/
         - -jar
         - /app.jar

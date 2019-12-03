@@ -39,6 +39,7 @@ spec:
         - -XX:+UnlockExperimentalVMOptions
         - -XX:+UseContainerSupport
         - -Djava.security.egd=file:/dev/./urandom
+        - -Dspring.cloud.config.uri=http://{{ template "spring-petclinic.fullname" . }}-config-server:8888
         - -jar
         - /app.jar
 {{ $imageInfo := (dict "image" .Values.images.hystrix_dashboard "global" .Values.global) }}
