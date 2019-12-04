@@ -31,12 +31,17 @@ spec:
     spec:
       containers:
       - name: {{ template "spring-petclinic.fullname" . }}-grafana-server
-{{ $imageInfo := (dict "image" .Values.images.discovery_server "global" .Values.global) }}
+{{ $imageInfo := (dict "image" .Values.images.grafana_server "global" .Values.global) }}
 {{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
+        securityContext:
+          runAsUser: 0
         ports:
         - containerPort: 3000
+        env:
+        - name: PROMETHEUS_SERVER_SVC
+          value: "{{ template "spring-petclinic.fullname" . }}-prometheus-server"
         resources:
           limits:
             memory: "256M"

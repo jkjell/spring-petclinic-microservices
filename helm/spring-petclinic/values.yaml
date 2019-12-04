@@ -31,17 +31,17 @@ images:
     tag: java11
     digest: sha256:72156e62a7c2aa246711740e94887b061ff8afcd8715bd43e92c8ff6627c099e
   grafana_server:
-    name: spring-petclinic-grafana-server
+    name: spring-petclinic-helm-grafana-server
     tag: latest
-    digest: sha256:f52d10d7ef30958fdf023b0bb2301233e9821d1671472d6b5d196a2aa8ee5c01
+    digest: sha256:88ca551e883b14ad348add4d32cd4b1c5e78016ba3b3a9ad164d685f73a310c3
   hystrix_dashboard:
     name: spring-petclinic-hystrix-dashboard
     tag: java11
     digest: sha256:50061e40166b46eebe752fabecc74812004323f6147564886f714b8683a708e1
   prometheus_server:
-    name: spring-petclinic-prometheus-server
+    name: spring-petclinic-helm-prometheus-server
     tag: latest
-    digest: sha256:d5d128f60e51e14ce522e9162d68dbdc3b58a8f4636eba7f27337f33bb879abf
+    digest: sha256:fffa3d17f86ffd6d8487128e347cf43dfdb31cb82d4d42f00c4d67207a27ba00
   tracing_server:
     name: zipkin
     tag: latest

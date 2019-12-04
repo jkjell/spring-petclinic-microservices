@@ -37,6 +37,15 @@ spec:
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
         - containerPort: 9090
+        env:
+        - name: API_GATEWAY_SVC
+          value: "{{ template "spring-petclinic.fullname" . }}-api-gateway"
+        - name: CUSTOMERS_SERVICE_SVC
+          value: "{{ template "spring-petclinic.fullname" . }}-customers-service"
+        - name: VISITS_SERVICE_SVC
+          value: "{{ template "spring-petclinic.fullname" . }}-visits-service"
+        - name: VETS_SERVICE_SVC
+          value: "{{ template "spring-petclinic.fullname" . }}-vets-service"
         resources:
           limits:
             memory: "512M"
