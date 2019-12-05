@@ -1,4 +1,4 @@
-FROM dev.registry.pivotal.io/spring-petclinic-e2e/spring-petclinic-config-server:java11
+FROM springcommunity/spring-petclinic-config-server:java11
 
 ENV EUREKA_DEFAULT_ZONE "http://discovery-server:8761/eureka/"
 ENV TRACING_SERVER_URL "http://tracing-server:9411"
