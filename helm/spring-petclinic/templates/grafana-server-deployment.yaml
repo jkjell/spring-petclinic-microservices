@@ -32,7 +32,6 @@ spec:
       containers:
       - name: {{ template "spring-petclinic.fullname" . }}-grafana-server
 {{ $imageInfo := (dict "image" .Values.images.grafana_server "global" .Values.global) }}
-{{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         securityContext:
@@ -45,5 +44,6 @@ spec:
         resources:
           limits:
             memory: "256M"
+{{ include "imagePullSecrets" $imageInfo | indent 6 }}
       restartPolicy: Always
 status: {}

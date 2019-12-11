@@ -32,7 +32,6 @@ spec:
       containers:
       - name: {{ template "spring-petclinic.fullname" . }}-prometheus-server
 {{ $imageInfo := (dict "image" .Values.images.prometheus_server "global" .Values.global) }}
-{{ include "imagePullSecrets" $imageInfo | indent 8 }}
         image: {{ include "registryImage" $imageInfo }}
         imagePullPolicy: {{ include "imagePullPolicy" $imageInfo }}
         ports:
@@ -49,5 +48,6 @@ spec:
         resources:
           limits:
             memory: "512M"
+{{ include "imagePullSecrets" $imageInfo | indent 6 }}
       restartPolicy: Always
 status: {}
