@@ -4,5 +4,6 @@ ADD ./grafana.ini /etc/grafana/grafana.ini
 ADD ./dashboards /var/lib/grafana/dashboards
 ENV PROMETHEUS_SERVER_SVC "http://prometheus-server"
 COPY entrypoint.sh /entrypoint.sh
+LABEL application=petclinic
 
 ENTRYPOINT ["sh", "/entrypoint.sh"]

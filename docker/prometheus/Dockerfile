@@ -5,4 +5,5 @@ ENV CUSTOMERS_SERVICE_SVC "customers-service:8081"
 ENV VISITS_SERVICE_SVC "visits-service:8082"
 ENV VETS_SERVICE_SVC "vets-service:8083"
 COPY entrypoint.sh /entrypoint.sh
+LABEL application=petclinic
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
