@@ -1,4 +1,7 @@
-FROM openjdk:8-jre-alpine
+FROM ubuntu:bionic
+
+RUN apt-get update && apt-get install -y openjdk-8-jre
+
 VOLUME /tmp
 ARG DOCKERIZE_VERSION
 ARG ARTIFACT_NAME
