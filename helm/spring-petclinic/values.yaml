@@ -5,7 +5,7 @@
 replicaCount: 1
 
 global:
-  imageRegistry: "dev.registry.pivotal.io/spring-petclinic-e2e"
+  imageRegistry: "registry.pivotal.io/pivnet-registry-test"
   imagePullPolicy: "IfNotPresent"
   imagePullSecrets: [regcred]
 
