@@ -43,7 +43,7 @@ images:
     tag: latest
     digest: sha256:fffa3d17f86ffd6d8487128e347cf43dfdb31cb82d4d42f00c4d67207a27ba00
   tracing_server:
-    name: zipkin
+    name: spring-petclinic-tracing-server
     tag: latest
     digest: sha256:87fe01472af81fb7e25d2a79eddda7b50bc450b7116b5fabafb4e6f6c66c802f
   vets_service:
